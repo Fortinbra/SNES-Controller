@@ -1,10 +1,5 @@
-#include <stdio.h>
-#include <hardware/uart.h>
-#include <pico/stdlib.h>
-#include <cstdlib>
-#include <string.h>
-#include <hardware/gpio.h>
-#include <hardware/irq.h>
+#include "pico/stdlib.h"
+#include "hardware/gpio.h"
 
 #define UART_ID uart0
 #define BAUD_RATE 115200

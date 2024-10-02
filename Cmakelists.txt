@@ -57,16 +57,8 @@ pico_enable_stdio_uart(${PROJECT_NAME} 1)
 
 # Add the standard library to the build
 target_link_libraries(${PROJECT_NAME}
-	pico_i2c_slave
 	hardware_gpio
-  hardware_i2c
-  hardware_spi
-  hardware_dma
-	pico_multicore
   pico_stdlib
-  pico_bootsel_via_double_reset
-  pico_time
-  hardware_timer
   hardware_irq
 )
 target_compile_definitions(${PROJECT_NAME} PUBLIC

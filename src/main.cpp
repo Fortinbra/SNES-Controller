@@ -77,4 +77,11 @@ int main()
 	gpio_set_dir(LATCH, GPIO_IN);
 
 	gpio_set_irq_enabled_with_callback(LATCH, GPIO_IRQ_EDGE_RISE, true, gpioIRQHandler);
+	while (true)
+	{
+		if (gpio_get(START))
+		{
+			snesState |= SNES_BUTTON_START;
+		}
+	}
 }

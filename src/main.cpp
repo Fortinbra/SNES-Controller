@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 
@@ -9,7 +10,18 @@
 #define DATA 3
 #define LATCH 4
 
-#define START 6
+#define SNES_BUTTON_A_PIN 6
+#define SNES_BUTTON_B_PIN 7
+#define SNES_BUTTON_X_PIN 8
+#define SNES_BUTTON_Y_PIN 9
+#define SNES_BUTTON_L_PIN 10
+#define SNES_BUTTON_R_PIN 11
+#define SNES_BUTTON_SELECT_PIN 12
+#define SNES_BUTTON_START_PIN 13
+#define SNES_BUTTON_UP_PIN 14
+#define SNES_BUTTON_DOWN_PIN 15
+#define SNES_BUTTON_LEFT_PIN 16
+#define SNES_BUTTON_RIGHT_PIN 17
 
 const uint16_t SNES_BUTTON_A = 0x01;
 const uint16_t SNES_BUTTON_B = 0x02;
@@ -71,17 +83,118 @@ int main()
 	snesState = 0x00;
 	gpio_init(DATA);
 	gpio_init(CLK);
+	gpio_init(LATCH);
+	gpio_init(PICO_DEFAULT_LED_PIN);
+	gpio_init(SNES_BUTTON_START_PIN);
+	gpio_init(SNES_BUTTON_A_PIN);
+	gpio_init(SNES_BUTTON_B_PIN);
+	gpio_init(SNES_BUTTON_X_PIN);
+	gpio_init(SNES_BUTTON_Y_PIN);
+	gpio_init(SNES_BUTTON_L_PIN);
+	gpio_init(SNES_BUTTON_R_PIN);
+	gpio_init(SNES_BUTTON_SELECT_PIN);
+	gpio_init(SNES_BUTTON_UP_PIN);
+	gpio_init(SNES_BUTTON_DOWN_PIN);
+	gpio_init(SNES_BUTTON_LEFT_PIN);
+	gpio_init(SNES_BUTTON_RIGHT_PIN);
 
 	gpio_set_dir(DATA, GPIO_OUT);
 	gpio_set_dir(CLK, GPIO_IN);
 	gpio_set_dir(LATCH, GPIO_IN);
+	gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
+	gpio_set_dir(SNES_BUTTON_START_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_A_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_B_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_X_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_Y_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_L_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_R_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_SELECT_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_UP_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_DOWN_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_LEFT_PIN, GPIO_IN);
+	gpio_set_dir(SNES_BUTTON_RIGHT_PIN, GPIO_IN);
+
+	gpio_pull_up(SNES_BUTTON_START_PIN);
+	gpio_pull_up(SNES_BUTTON_A_PIN);
+	gpio_pull_up(SNES_BUTTON_B_PIN);
+	gpio_pull_up(SNES_BUTTON_X_PIN);
+	gpio_pull_up(SNES_BUTTON_Y_PIN);
+	gpio_pull_up(SNES_BUTTON_L_PIN);
+	gpio_pull_up(SNES_BUTTON_R_PIN);
+	gpio_pull_up(SNES_BUTTON_SELECT_PIN);
+	gpio_pull_up(SNES_BUTTON_UP_PIN);
+	gpio_pull_up(SNES_BUTTON_DOWN_PIN);
+	gpio_pull_up(SNES_BUTTON_LEFT_PIN);
+	gpio_pull_up(SNES_BUTTON_RIGHT_PIN);
 
 	gpio_set_irq_enabled_with_callback(LATCH, GPIO_IRQ_EDGE_RISE, true, gpioIRQHandler);
+
 	while (true)
 	{
-		if (gpio_get(START))
+		snesState = 0; // Reset state
+
+		if (gpio_get(SNES_BUTTON_START_PIN) == 0)
 		{
 			snesState |= SNES_BUTTON_START;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
 		}
+		if (gpio_get(SNES_BUTTON_A_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_A;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+		if (gpio_get(SNES_BUTTON_B_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_B;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+		if (gpio_get(SNES_BUTTON_X_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_X;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+		if (gpio_get(SNES_BUTTON_Y_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_Y;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+		if (gpio_get(SNES_BUTTON_L_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_L;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+		if (gpio_get(SNES_BUTTON_R_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_R;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+		if (gpio_get(SNES_BUTTON_SELECT_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_SELECT;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+		if (gpio_get(SNES_BUTTON_UP_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_UP;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+		if (gpio_get(SNES_BUTTON_DOWN_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_DOWN;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+		if (gpio_get(SNES_BUTTON_LEFT_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_LEFT;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+		if (gpio_get(SNES_BUTTON_RIGHT_PIN) == 0)
+		{
+			snesState |= SNES_BUTTON_RIGHT;
+			gpio_put(PICO_DEFAULT_LED_PIN, true);
+		}
+
+		sleep_ms(100);
 	}
 }
